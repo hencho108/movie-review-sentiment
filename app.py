@@ -7,6 +7,35 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
+from joblib import load
+
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt 
+import nltk
+import re
+import string
+import time
+from bs4 import BeautifulSoup
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_recall_fscore_support as score
+stopwords = nltk.corpus.stopwords.words('english')
+
+wn = nltk.WordNetLemmatizer()
+def clean_text_tokenized(text):
+    # Remove HTML tags
+    text = BeautifulSoup(text, "html.parser").get_text()
+    # Remove punctuation
+    text = ''.join([word.lower() for word in text if word not in string.punctuation])
+    # Tokenize
+    tokens = re.split('\W+', text)
+    # Stem
+    text = [wn.lemmatize(word) for word in tokens if word not in stopwords]
+    return text
+pipeline = load('training/svc_pipeline.joblib')
+
 
 external_stylesheets = [
     #"https://use.fontawesome.com/releases/v5.0.7/css/all.css",
@@ -121,10 +150,14 @@ def display_page(pathname):
 )
 def update_progress(review):
     if review is None:
-        n_chars = 0
+        bar_value = 0
+        pred_sentiment = 0
     else:
-        n_chars = len(str(review))
-    return n_chars, n_chars
+        pred_sentiment = pipeline.predict_proba([review])[0][1]
+        #pred_sentiment = round(pred_sentiment * 100, 1)
+        #pred_sentiment_text = f'{pred_sentiment}%'
+        bar_value = pred_sentiment * 100
+    return bar_value, pred_sentiment
 
 
 if __name__ == '__main__':
