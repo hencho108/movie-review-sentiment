@@ -22,7 +22,7 @@ from sklearn.model_selection import KFold, cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support as score
 stopwords = nltk.corpus.stopwords.words('english')
-
+ps = nltk.PorterStemmer()
 wn = nltk.WordNetLemmatizer()
 def clean_text_tokenized(text):
     # Remove HTML tags
@@ -32,8 +32,9 @@ def clean_text_tokenized(text):
     # Tokenize
     tokens = re.split('\W+', text)
     # Stem
-    text = [wn.lemmatize(word) for word in tokens if word not in stopwords]
+    text = [ps.stem(word) for word in tokens if word not in stopwords]
     return text
+
 pipeline = load('training/svc_pipeline.joblib')
 
 
