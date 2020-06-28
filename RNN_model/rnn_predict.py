@@ -17,13 +17,15 @@ from joblib import dump, load
 
 if __name__ == '__main__':
     
+    # demo
+
     # load model
     model = load_model("rnn_model.h5")
     
     # load text_transformer
     text_transformer = load("text_transformer.joblib")
 
-    # demo
+    
 
     text = 'awesome movie, but somehwere I got lost'
 
