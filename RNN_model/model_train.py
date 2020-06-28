@@ -13,6 +13,7 @@ from tensorflow.keras.layers import Dense, Input, GlobalMaxPooling1D
 from tensorflow.keras.layers import LSTM, Embedding
 from tensorflow.keras.models import Model
 
+import pickle
 
 def run_training():
     """Train the model"""
@@ -37,6 +38,10 @@ def run_training():
     tokenizer.fit_on_texts(df_train)
     sequences_train = tokenizer.texts_to_sequences(df_train)
     sequences_test = tokenizer.texts_to_sequences(df_test)
+
+    # saving tokenizer
+    with open('tokenizer.pickle', 'wb') as handle:
+        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # get word -> integer mapping
     word2idx = tokenizer.word_index
@@ -72,6 +77,7 @@ def run_training():
 
     model.save('rnn_model.h5')
 
+    print("... model saved")
 
 if __name__ == '__main__':
     run_training()
