@@ -9,7 +9,7 @@ from joblib import load
 import pandas as pd
 import random
 
-movies  = pd.read_csv('./data/movies.csv', sep=';')
+movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
 external_stylesheets = [
     dbc.themes.FLATLY,
