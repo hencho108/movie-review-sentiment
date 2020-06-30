@@ -324,5 +324,4 @@ def toggle_model_buttons(rnd_clicks, svm_clicks, rnn_clicks):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
-    api.run()
+    app.run_server(debug=False, host='0.0.0.0')
