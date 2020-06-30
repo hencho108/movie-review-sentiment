@@ -25,6 +25,8 @@ app = dash.Dash(
     suppress_callback_exceptions=True
 )
 
+server = app.server
+
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(
