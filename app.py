@@ -5,7 +5,11 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from joblib import load
+from models.SVM.utils import clean_text_tokenized
+from models.SVM.predict import svm_make_prediction
+from models.RNN.transformers import TextToSequence
+from models.RNN.transformers import RemoveHTML
+from models.RNN.rnn_predict import rnn_make_predictions
 import pandas as pd
 import random
 
@@ -181,8 +185,8 @@ home_layout = html.Div([
             ),
             dbc.ButtonGroup(
                 [
-                    dbc.Button('Random', id='button_rnd', className='btn btn-primary', active=True),
-                    dbc.Button('SVM', id='button_svm', className='btn btn-primary', active=False),
+                    dbc.Button('Random', id='button_rnd', className='btn btn-primary', active=False),
+                    dbc.Button('SVM', id='button_svm', className='btn btn-primary', active=True),
                     dbc.Button('RNN', id='button_rnn', className='btn btn-primary', active=False)
                 ],
             )
@@ -221,28 +225,32 @@ def display_page(pathname):
         Output('progress','color'),
         Output('decision','children')
     ],
-    [Input('review','value')]
+    [Input('review','value')],
+    [
+        State('button_svm','active')
+    ]
 )
-def update_progress(review):
+def update_progress(review, buttom_svm):
     if review is not None and review.strip() != '':
-        pred_sentiment = round(random.uniform(0,1),2)
-        #pred_sentiment = pipeline.predict_proba([review])[0][1]
-        #pred_sentiment = round(pred_sentiment * 100, 1)
-        #pred_sentiment_text = f'{pred_sentiment}%'
-        bar_value = pred_sentiment * 100
+        if buttom_svm:
+            #pred_sentiment = round(random.uniform(0,1),2)
+            pred_sentiment = svm_make_prediction(review)
+        pred_sentiment = round(pred_sentiment * 100, 1)
+        pred_sentiment_text = f'{pred_sentiment}%'
+        bar_value = pred_sentiment
 
-        if pred_sentiment >= 0.67:
+        if pred_sentiment >= 67:
             color = 'success'
-        elif 0.33 < pred_sentiment < 0.67:
+        elif 33 < pred_sentiment < 67:
             color = 'warning'
         else:
             color = 'danger'
 
-        if pred_sentiment >= 0.5:
+        if pred_sentiment >= 50:
             decision = 'Sentiment: Positive 👍'
         else:
             decision = 'Sentiment: Negative 👎'
-        return bar_value, pred_sentiment, color, decision
+        return bar_value, pred_sentiment_text, color, decision
     else:
         return 0, None, None, 'Classification: ---'
 
@@ -326,4 +334,4 @@ def toggle_model_buttons(rnd_clicks, svm_clicks, rnn_clicks):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)#, host='0.0.0.0')
+    app.run_server(debug=True)#, host='0.0.0.0')
