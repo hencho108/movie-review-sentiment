@@ -4,19 +4,17 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
+#from flask import Flask, request, jsonify
 from joblib import load
 import pandas as pd
 import random
 
+movies  = pd.read_csv('./data/movies.csv', sep=';')
 
 external_stylesheets = [
-    #dbc.themes.FLATLY,
-    'https://use.fontawesome.com/releases/v5.7.2/css/all.css',
-    'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css'
-    #'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+    dbc.themes.FLATLY,
+    'https://use.fontawesome.com/releases/v5.7.2/css/all.css'
 ]
-
-#external_script = "https://raw.githubusercontent.com/MarwanDebbiche/post-tuto-deployment/master/src/dash/assets/gtag.js"
 
 app = dash.Dash(
     __name__, 
@@ -26,8 +24,6 @@ app = dash.Dash(
     ],
     suppress_callback_exceptions=True
 )
-
-movies  = pd.read_csv('./data/movies.csv', sep=';')
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -41,8 +37,7 @@ app.layout = html.Div([
             'margin-top':'10px',
             'padding':'5px',
             'height':'600px', 
-            #'border':'1px solid grey',
-            #'border-radius':'10px'
+            #'border':'1px solid grey'
         }
     )
 ], style={'height':'100vh','width':'100vw'}
@@ -109,6 +104,8 @@ home_layout = html.Div([
             #'border-radius':'15px''
         }
     ),
+
+    # Review and results wrapper
     html.Div(
         [
             dcc.Textarea(
@@ -328,3 +325,4 @@ def toggle_model_buttons(rnd_clicks, svm_clicks, rnn_clicks):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+    api.run()
