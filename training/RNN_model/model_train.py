@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import string
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from bs4 import BeautifulSoup
@@ -13,12 +12,13 @@ from tensorflow.keras.layers import Dense, Input, GlobalMaxPooling1D
 from tensorflow.keras.layers import LSTM, Embedding
 from tensorflow.keras.models import Model
 
+import pickle
 
 def run_training():
     """Train the model"""
 
     # load data
-    data = pd.read_csv("../training/data/IMDB Dataset.csv")
+    data = pd.read_csv("../data/IMDB Dataset.csv")
 
     print('Preprocessing data...')
     # create binary labels
@@ -38,8 +38,11 @@ def run_training():
     sequences_train = tokenizer.texts_to_sequences(df_train)
     sequences_test = tokenizer.texts_to_sequences(df_test)
 
-    # get word -> integer mapping
-    word2idx = tokenizer.word_index
+    # saving tokenizer
+    print('Saving tokenizer...')
+
+    with open('../../models/RNN/tokenizer.pickle', 'wb') as handle:
+        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     # pad sequences so that we get a N x T matrix
     data_train = pad_sequences(sequences_train, maxlen=500)
@@ -47,7 +50,7 @@ def run_training():
 
     ### Create the model
     print('Building model...')
-    V = len(word2idx) # number of unique tokens
+    V = len(tokenizer.word_index) # number of unique tokens
     T = data_train.shape[1] # sequence length
     D = 32 # Embedding dimensionality
     M = 10 # Hidden state dimensionality
@@ -70,7 +73,7 @@ def run_training():
     scores = model.evaluate(data_test, Y_test, verbose=0)
     print("Accuracy: %.2f%%" % (scores[1]*100))
 
-    model.save('rnn_model.h5')
+    model.save('../../models/RNN/rnn_model.h5')
 
 
 if __name__ == '__main__':

@@ -185,7 +185,6 @@ home_layout = html.Div([
             ),
             dbc.ButtonGroup(
                 [
-                    dbc.Button('Random', id='button_rnd', className='btn btn-primary', active=False),
                     dbc.Button('SVM', id='button_svm', className='btn btn-primary', active=True),
                     dbc.Button('RNN', id='button_rnn', className='btn btn-primary', active=False)
                 ],
@@ -225,16 +224,20 @@ def display_page(pathname):
         Output('progress','color'),
         Output('decision','children')
     ],
-    [Input('review','value')],
     [
-        State('button_svm','active')
+        Input('review','value'),
+        Input('button_svm','active'),
+        Input('button_rnn','active')
     ]
 )
-def update_progress(review, buttom_svm):
+def update_progress(review, button_svm, button_rnn):
+
     if review is not None and review.strip() != '':
-        if buttom_svm:
-            #pred_sentiment = round(random.uniform(0,1),2)
+        if button_svm:
             pred_sentiment = svm_make_prediction(review)
+        elif button_rnn:
+            pred_sentiment = rnn_make_predictions(review)
+
         pred_sentiment = round(pred_sentiment * 100, 1)
         pred_sentiment_text = f'{pred_sentiment}%'
         bar_value = pred_sentiment
@@ -307,17 +310,15 @@ def toggle_yesno_buttons(yes_clicks, no_clicks):
 
 @app.callback(
     [
-        Output('button_rnd','active'),
         Output('button_svm','active'),
         Output('button_rnn','active')
     ],
     [
-        Input('button_rnd','n_clicks'),
         Input('button_svm','n_clicks'),
         Input('button_rnn','n_clicks')
     ]
 )
-def toggle_model_buttons(rnd_clicks, svm_clicks, rnn_clicks):
+def toggle_model_buttons(svm_clicks, rnn_clicks):
     ctx = dash.callback_context
 
     if not ctx.triggered:
@@ -325,12 +326,10 @@ def toggle_model_buttons(rnd_clicks, svm_clicks, rnn_clicks):
     else:
         button_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    if button_id == 'button_rnd':
-        return True, False, False
-    elif button_id == 'button_svm':
-        return False, True, False
+    if button_id == 'button_svm':
+        return True, False
     elif button_id == 'button_rnn':
-        return False, False, True
+        return False, True
 
 
 if __name__ == '__main__':
