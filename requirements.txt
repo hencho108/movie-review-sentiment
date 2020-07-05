@@ -1,4 +1,4 @@
--e ./models
+-e .
 setuptools==47.0.0
 tensorflow==2.2.0
 scikit-learn==0.22
