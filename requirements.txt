@@ -1,3 +1,4 @@
+-e ./models
 setuptools
 tensorflow==2.2.0
 scikit-learn==0.22
