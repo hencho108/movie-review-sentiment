@@ -5,11 +5,11 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from models.SVM.utils import clean_text_tokenized
-from models.SVM.predict import svm_make_prediction
 from models.RNN.transformers import TextToSequence
 from models.RNN.transformers import RemoveHTML
 from models.RNN.rnn_predict import rnn_make_predictions
+from models.SVM.utils import clean_text_tokenized
+from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
