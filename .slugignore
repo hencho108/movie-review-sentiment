@@ -1,7 +1,12 @@
 .vscode/
 __pycache__/
+models/__pycache__/
+models/RNN/__pycache__/
+models/SVM/__pycache__/
 .ipynb_checkpoints
 .DS_Store
 training/
 .egg-info
 .eggs
+app2.py
+"movie scraper/*.ipynb"

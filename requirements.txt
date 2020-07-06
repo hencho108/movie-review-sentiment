@@ -8,11 +8,7 @@ dash_bootstrap_components==0.10.2
 dash_core_components==1.10.1
 joblib==0.15.1
 pandas==0.25.3
-sklearn
 gunicorn
 numpy==1.18.4
 nltk
-beautifulsoup4==4.9.1
-bs4==0.0.1
-tqdm==4.46.1
 
