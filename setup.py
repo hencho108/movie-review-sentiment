@@ -10,6 +10,6 @@ setup(
     packages=find_packages(exclude=['training', 'movie scraper']),
     package_data={'': ['*', 'data/*', 'SVM/pipelines/*']},
     include_package_data=True,
-    install_requires=list_reqs(),
+    install_requires=list_reqs()[1:],
     extras_require={}
 )
