@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import string
 from sklearn.model_selection import train_test_split
+from models.RNN.transformers import TextToSequence, RemoveHTML
 from sklearn.pipeline import Pipeline
 from bs4 import BeautifulSoup
 

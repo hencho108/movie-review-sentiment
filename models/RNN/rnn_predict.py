@@ -1,5 +1,5 @@
 from tensorflow.keras.models import load_model
-from models.RNN.transformers import TextToSequence#, RemoveHTML
+from models.RNN.transformers import TextToSequence, RemoveHTML
 import pickle
 from joblib import dump, load
 import os

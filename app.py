@@ -6,8 +6,7 @@ import pickle
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from models.RNN.transformers import TextToSequence
-#from models.RNN.transformers import RemoveHTML
+from models.RNN.transformers import TextToSequence, RemoveHTML
 from models.RNN.rnn_predict import rnn_make_predictions
 from models.SVM.utils import clean_text_tokenized
 from models.SVM.predict import svm_make_prediction

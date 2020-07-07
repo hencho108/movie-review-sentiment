@@ -8,10 +8,12 @@ from sklearn.preprocessing import FunctionTransformer
 
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import load_model   
+from tensorflow.keras.models import load_model
 
 import pickle
 from joblib import dump, load
+
+from models.RNN.transformers import TextToSequence, RemoveHTML
 
 
 if __name__ == '__main__':
@@ -53,13 +55,13 @@ if __name__ == '__main__':
 
     print('text_transformer saved ...')
 
-    
+
     # demo
     print('run demo ...')
 
     # load model
     model = load_model("rnn_model.h5")
-    
+
     # load text_transformer
     #text_transformer = load("text_transformer.joblib")
 
@@ -68,7 +70,5 @@ if __name__ == '__main__':
     sequence = text_transformer.transform(text)
 
     pred = model.predict(sequence)
-    
-    print(pred)
 
-   
+    print(pred)
