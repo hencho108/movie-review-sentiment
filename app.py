@@ -6,12 +6,18 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
 from models.RNN.transformers import TextToSequence
-from models.RNN.transformers import RemoveHTML
+#from models.RNN.transformers import RemoveHTML
 from models.RNN.rnn_predict import rnn_make_predictions
 from models.SVM.utils import clean_text_tokenized
 from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
+
+
+from bs4 import BeautifulSoup
+def RemoveHTML(text):
+    text = BeautifulSoup(text, "html.parser").get_text()
+    return text
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
@@ -21,7 +27,7 @@ external_stylesheets = [
 ]
 
 app = dash.Dash(
-    __name__, 
+    __name__,
     external_stylesheets=external_stylesheets,
     meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1"}
@@ -36,13 +42,13 @@ app.layout = html.Div([
     html.Div(
         id='page-content',
         style={
-            'width':'80%', 
+            'width':'80%',
             'max-width':'350px',
             'min-width':'350px',
             'margin':'0 auto',
             'margin-top':'10px',
             'padding':'5px',
-            'height':'600px', 
+            'height':'600px',
             #'border':'1px solid grey'
         }
     )
@@ -87,7 +93,7 @@ home_layout = html.Div([
                             'display':'table-cell',
                             'vertical-align':'middle'
                         }
-                    ), 
+                    ),
                 ],
                 style={
                     #'border':'1px solid green',
@@ -159,7 +165,7 @@ home_layout = html.Div([
                     )
                 ],
                 id='submit_button',
-                color='primary', 
+                color='primary',
                 className='btn btn-primary btn-lg btn-block',
                 n_clicks_timestamp=0,
                 style={'margin-top':'25px'}
@@ -175,7 +181,7 @@ home_layout = html.Div([
                     )
                 ],
                 id='shuffle_button',
-                color='secondary', 
+                color='secondary',
                 className='btn btn-primary btn-lg btn-block',
                 n_clicks_timestamp=0
             ),
@@ -219,8 +225,8 @@ def display_page(pathname):
 
 @app.callback(
     [
-        Output('progress','value'), 
-        Output('progress','children'), 
+        Output('progress','value'),
+        Output('progress','children'),
         Output('progress','color'),
         Output('decision','children')
     ],
