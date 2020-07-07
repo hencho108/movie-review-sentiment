@@ -1,5 +1,5 @@
-from tensorflow.keras.models import load_model   
-from models.RNN.transformers import RemoveHTML, TextToSequence
+from tensorflow.keras.models import load_model
+from models.RNN.transformers import TextToSequence, RemoveHTML
 import pickle
 from joblib import dump, load
 import os
@@ -23,7 +23,7 @@ def rnn_make_predictions(text):
     sequence = text_transformer.transform(text)
     # make prediction
     pred = model.predict(sequence)[0][0]
-    
+
     return pred
 
 
