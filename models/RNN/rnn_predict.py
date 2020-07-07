@@ -1,8 +1,15 @@
 from tensorflow.keras.models import load_model
-from models.RNN.transformers import TextToSequence, RemoveHTML
+from models.RNN.transformers import TextToSequence#, RemoveHTML
 import pickle
 from joblib import dump, load
 import os
+
+#####
+from bs4 import BeautifulSoup
+def RemoveHTML(text):
+    text = BeautifulSoup(text, "html.parser").get_text()
+    return text
+#####
 
 # load tokenizer
 text_transformer_dir = os.path.join(os.path.dirname(__file__), 'text_transformer.joblib')

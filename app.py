@@ -14,10 +14,12 @@ import pandas as pd
 import random
 
 
+#####
 from bs4 import BeautifulSoup
 def RemoveHTML(text):
     text = BeautifulSoup(text, "html.parser").get_text()
     return text
+#####
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
