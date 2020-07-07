@@ -1,0 +1,17 @@
+setuptools==47.0.0
+tensorflow==2.0.0
+scikit-learn==0.22
+scipy==1.4.1
+dash==1.13.3
+dash_html_components==1.0.3
+dash_bootstrap_components==0.10.2
+dash_core_components==1.10.1
+joblib==0.15.1
+pandas==0.25.3
+sklearn
+gunicorn
+numpy==1.18.5
+nltk
+beautifulsoup4==4.9.1
+bs4==0.0.1
+tqdm==4.46.1
