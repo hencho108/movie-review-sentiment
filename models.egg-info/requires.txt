@@ -13,5 +13,4 @@ gunicorn
 numpy==1.18.5
 nltk
 beautifulsoup4==4.9.1
-bs4==0.0.1
 tqdm==4.46.1
