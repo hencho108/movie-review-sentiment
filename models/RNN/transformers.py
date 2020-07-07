@@ -14,11 +14,11 @@ with open(pickle_dir, 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 def RemoveHTML(text):
-        text = BeautifulSoup(text, "html.parser").get_text()
-        return text
+    text = BeautifulSoup(text, "html.parser").get_text()
+    return text
 
 def TextToSequence(text):
-        # loading
-        text = pd.Series(text)
-        text = pad_sequences(tokenizer.texts_to_sequences((pd.Series(text))),maxlen=500)
-        return text
+    # loading
+    text = pd.Series(text)
+    text = pad_sequences(tokenizer.texts_to_sequences((pd.Series(text))),maxlen=500)
+    return text
