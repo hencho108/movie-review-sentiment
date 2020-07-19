@@ -6,8 +6,8 @@ import pickle
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from models.SVM.utils import clean_text_tokenized
-from models.SVM.predict import svm_make_prediction
+#from models.SVM.utils import clean_text_tokenized
+#from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
