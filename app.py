@@ -11,7 +11,7 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 import random
 
-
+import nltk
 import os
 from joblib import load
 import re
