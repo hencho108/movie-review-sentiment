@@ -6,20 +6,11 @@ import pickle
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from models.RNN.transformers import TextToSequence, RemoveHTML
-from models.RNN.rnn_predict import rnn_make_predictions
 from models.SVM.utils import clean_text_tokenized
 from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
-
-#####
-from bs4 import BeautifulSoup
-def RemoveHTML(text):
-    text = BeautifulSoup(text, "html.parser").get_text()
-    return text
-#####
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
@@ -45,8 +36,8 @@ app.layout = html.Div([
         id='page-content',
         style={
             'width':'80%',
-            'max-width':'350px',
-            'min-width':'350px',
+            'max-width':'320px',
+            'min-width':'320px',
             'margin':'0 auto',
             'margin-top':'10px',
             'padding':'5px',
@@ -194,7 +185,7 @@ home_layout = html.Div([
             dbc.ButtonGroup(
                 [
                     dbc.Button('SVM', id='button_svm', className='btn btn-primary', active=True),
-                    dbc.Button('RNN', id='button_rnn', className='btn btn-primary', active=False)
+                    dbc.Button('None', id='button_none', className='btn btn-primary', active=False)
                 ],
             )
         ],
@@ -235,16 +226,16 @@ def display_page(pathname):
     [
         Input('review','value'),
         Input('button_svm','active'),
-        Input('button_rnn','active')
+        Input('button_none','active')
     ]
 )
-def update_progress(review, button_svm, button_rnn):
+def update_progress(review, button_svm, button_none):
 
     if review is not None and review.strip() != '':
         if button_svm:
             pred_sentiment = svm_make_prediction(review)
-        elif button_rnn:
-            pred_sentiment = rnn_make_predictions(review)
+        elif button_none:
+            pred_sentiment = 0
 
         pred_sentiment = round(pred_sentiment * 100, 1)
         pred_sentiment_text = f'{pred_sentiment}%'
@@ -319,11 +310,11 @@ def toggle_yesno_buttons(yes_clicks, no_clicks):
 @app.callback(
     [
         Output('button_svm','active'),
-        Output('button_rnn','active')
+        Output('button_none','active')
     ],
     [
         Input('button_svm','n_clicks'),
-        Input('button_rnn','n_clicks')
+        Input('button_none','n_clicks')
     ]
 )
 def toggle_model_buttons(svm_clicks, rnn_clicks):
@@ -336,7 +327,7 @@ def toggle_model_buttons(svm_clicks, rnn_clicks):
 
     if button_id == 'button_svm':
         return True, False
-    elif button_id == 'button_rnn':
+    elif button_id == 'button_none':
         return False, True
 
 

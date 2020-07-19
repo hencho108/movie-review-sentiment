@@ -19,6 +19,7 @@ def clean_text_tokenized(text):
     text = ''.join([word.lower() for word in text if word not in string.punctuation])
     # Tokenize
     tokens = re.split('\W+', text)
+    tokens = list(filter(None,tokens))
     # Stem
     text = [ps.stem(word) for word in tokens if word not in stopwords]
     return text
