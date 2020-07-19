@@ -9,10 +9,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 from sklearn.calibration import CalibratedClassifierCV
 
-ps = nltk.PorterStemmer()
-stopwords = nltk.corpus.stopwords.words('english')
 
 def clean_text_tokenized(text):
+
+    ps = nltk.PorterStemmer()
+    stopwords = nltk.corpus.stopwords.words('english')
+
     # Remove HTML tags
     text = BeautifulSoup(text, "html.parser").get_text()
     # Remove punctuation
