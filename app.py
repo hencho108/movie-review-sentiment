@@ -75,7 +75,7 @@ home_layout = html.Div([
                     'height':'80px',
                     'width':'50px',
                     'float':'left',
-                    #'border':'1px solid red'
+                    'border':'1px solid red'
                 }
             ),
             html.Div(
@@ -89,10 +89,10 @@ home_layout = html.Div([
                     ),
                 ],
                 style={
-                    #'border':'1px solid green',
+                    'border':'1px solid green',
                     'float':'left',
                     'margin-left':'5px',
-                    'max-width':'270px',
+                    'max-width':'240px',
                     'height':'80px',
                     'overflow': 'auto',
                     'display':'table',
