@@ -11,6 +11,8 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 import random
 
+
+########################
 import nltk
 import os
 from joblib import load
@@ -21,7 +23,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 from sklearn.calibration import CalibratedClassifierCV
-####
 
 def clean_text_tokenized(text):
 
@@ -40,14 +41,14 @@ def clean_text_tokenized(text):
     return text
 
 
-pipe_dir = os.path.join(os.path.dirname(__file__), 'models','SVM','pipelines', 'svm_pipe.joblib')
+#pipe_dir = os.path.join(os.path.dirname(__file__), 'models','SVM','pipelines', 'svm_pipe.joblib')
 
-svm_pipe = load(pipe_dir)
+#svm_pipe = load(pipe_dir)
 
 def svm_make_prediction(text):
     pred = svm_pipe.predict_proba([text])[0][1]
     return pred
-####
+#######################
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
