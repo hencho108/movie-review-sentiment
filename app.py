@@ -233,7 +233,7 @@ def update_progress(review, button_svm, button_none):
 
     if review is not None and review.strip() != '':
         if button_svm:
-            pred_sentiment = svm_make_prediction(review)
+            pred_sentiment = 0#svm_make_prediction(review)
         elif button_none:
             pred_sentiment = 0
 
