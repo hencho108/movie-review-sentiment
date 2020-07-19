@@ -10,8 +10,17 @@ from dash.exceptions import PreventUpdate
 #from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
-import os
 
+
+import os
+from joblib import load
+import re
+import string
+from bs4 import BeautifulSoup
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.pipeline import Pipeline
+from sklearn.svm import LinearSVC
+from sklearn.calibration import CalibratedClassifierCV
 ####
 
 def clean_text_tokenized(text):
