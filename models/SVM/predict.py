@@ -1,5 +1,4 @@
-
-from models.SVM.utils import clean_text_tokenized
+from models.SVM.utils import clean_text_tokenized, ps, stopwords
 from joblib import load
 import os 
 
