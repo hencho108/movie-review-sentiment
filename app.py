@@ -41,9 +41,9 @@ def clean_text_tokenized(text):
     return text
 
 
-#pipe_dir = os.path.join(os.path.dirname(__file__), 'models','SVM','pipelines', 'svm_pipe.joblib')
+pipe_dir = os.path.join(os.path.dirname(__file__), 'models','SVM','pipelines', 'svm_pipe.joblib')
 
-#svm_pipe = load(pipe_dir)
+svm_pipe = load(pipe_dir)
 
 def svm_make_prediction(text):
     pred = svm_pipe.predict_proba([text])[0][1]
