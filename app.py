@@ -6,11 +6,38 @@ import pickle
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from models.SVM.utils import clean_text_tokenized
-from models.SVM.predict import svm_make_prediction
+#from models.SVM.utils import clean_text_tokenized
+#from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
+####
+
+def clean_text_tokenized(text):
+
+    ps = nltk.PorterStemmer()
+    stopwords = nltk.corpus.stopwords.words('english')
+
+    # Remove HTML tags
+    text = BeautifulSoup(text, "html.parser").get_text()
+    # Remove punctuation
+    text = ''.join([word.lower() for word in text if word not in string.punctuation])
+    # Tokenize
+    tokens = re.split(r'\W+', text)
+    tokens = list(filter(None,tokens))
+    # Stem
+    text = [ps.stem(word) for word in tokens if word not in stopwords]
+    return text
+
+
+pipe_dir = os.path.join(os.path.dirname(__file__), 'models','SVM','pipelines', 'svm_pipe.joblib')
+
+svm_pipe = load(pipe_dir)
+
+def svm_make_prediction(text):
+    pred = svm_pipe.predict_proba([text])[0][1]
+    return pred
+####
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
@@ -269,9 +296,6 @@ def update_progress(review, button_svm, button_none):
     ]
 )
 def shuffle_movie(submit_click_ts, shuffle_click_ts):
-    if submit_click_ts > shuffle_click_ts:
-        x=1
-
     random_movie = movies.sample(1).to_dict(orient='records')[0]
     movie_title = random_movie['title']
     poster_url = random_movie['poster_url']
