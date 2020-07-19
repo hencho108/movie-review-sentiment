@@ -6,12 +6,12 @@ import pickle
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-#from models.SVM.utils import clean_text_tokenized
-#from models.SVM.predict import svm_make_prediction
+from models.SVM.utils import clean_text_tokenized
+from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
-
+"""
 ########################
 import nltk
 import os
@@ -49,6 +49,7 @@ def svm_make_prediction(text):
     pred = svm_pipe.predict_proba([text])[0][1]
     return pred
 #######################
+"""
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
@@ -271,7 +272,7 @@ def update_progress(review, button_svm, button_none):
 
     if review is not None and review.strip() != '':
         if button_svm:
-            pred_sentiment = 0#svm_make_prediction(review)
+            pred_sentiment = svm_make_prediction(review)
         elif button_none:
             pred_sentiment = 0
 
