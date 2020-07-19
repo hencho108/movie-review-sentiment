@@ -11,45 +11,6 @@ from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
-"""
-########################
-import nltk
-import os
-from joblib import load
-import re
-import string
-from bs4 import BeautifulSoup
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.pipeline import Pipeline
-from sklearn.svm import LinearSVC
-from sklearn.calibration import CalibratedClassifierCV
-
-def clean_text_tokenized(text):
-
-    ps = nltk.PorterStemmer()
-    stopwords = nltk.corpus.stopwords.words('english')
-
-    # Remove HTML tags
-    text = BeautifulSoup(text, "html.parser").get_text()
-    # Remove punctuation
-    text = ''.join([word.lower() for word in text if word not in string.punctuation])
-    # Tokenize
-    tokens = re.split(r'\W+', text)
-    tokens = list(filter(None,tokens))
-    # Stem
-    text = [ps.stem(word) for word in tokens if word not in stopwords]
-    return text
-
-
-pipe_dir = os.path.join(os.path.dirname(__file__), 'models','SVM','pipelines', 'svm_pipe.joblib')
-
-svm_pipe = load(pipe_dir)
-
-def svm_make_prediction(text):
-    pred = svm_pipe.predict_proba([text])[0][1]
-    return pred
-#######################
-"""
 
 movies  = pd.read_csv('./movie scraper/data/movies.csv', sep=';')
 
