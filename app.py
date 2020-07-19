@@ -6,8 +6,8 @@ import pickle
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 #from flask import Flask, request, jsonify
-from models.SVM.utils import clean_text_tokenized
-#from models.SVM.predict import svm_make_prediction
+#from models.SVM.utils import clean_text_tokenized
+from models.SVM.predict import svm_make_prediction
 import pandas as pd
 import random
 
@@ -75,7 +75,7 @@ home_layout = html.Div([
                     'height':'80px',
                     'width':'50px',
                     'float':'left',
-                    'border':'1px solid red'
+                    #'border':'1px solid red'
                 }
             ),
             html.Div(
@@ -89,7 +89,7 @@ home_layout = html.Div([
                     ),
                 ],
                 style={
-                    'border':'1px solid green',
+                    #'border':'1px solid green',
                     'float':'left',
                     'margin-left':'5px',
                     'max-width':'240px',
@@ -137,7 +137,7 @@ home_layout = html.Div([
                 id='decision',
                 style={'margin-top':'10px', 'font-weight':'bold'}
             ),
-            html.H5(
+            html.H6(
                 'Was your review classified correctly? 🤔',
                 style={'margin-top':'25px'}
             ),
