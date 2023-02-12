@@ -1,5 +1,5 @@
 -e .
-setuptools==47.0.0
+setuptools==65.5.1
 tensorflow==2.0.0
 scikit-learn==0.22
 scipy==1.4.1
