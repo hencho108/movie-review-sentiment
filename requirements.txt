@@ -1,6 +1,6 @@
 -e .
 setuptools==47.0.0
-tensorflow==2.0.0
+tensorflow==2.11.1
 scikit-learn==0.22
 scipy==1.4.1
 dash==1.13.3
